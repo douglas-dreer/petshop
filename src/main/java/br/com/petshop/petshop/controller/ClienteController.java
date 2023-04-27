@@ -32,11 +32,6 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.buscarPorId(uuid));
     }
 
-    @GetMapping(path = "", params = "uuidList")
-    public ResponseEntity<List<Cliente>> buscarPorIds(@PathVariable(name = "uuidList") List<UUID> uuidList) {
-        return ResponseEntity.ok(clienteService.buscarPorId(uuidList));
-    }
-
     @GetMapping(path = "/", params = "nome")
     public ResponseEntity<List<Cliente>> buscarPorNomeOrSobrenome(@RequestParam(name = "nome") String nome) {
         return ResponseEntity.ok(clienteService.listarPorNome(nome));
@@ -61,6 +56,7 @@ public class ClienteController {
 
     @PatchMapping(path = "{uuid}")
     public ResponseEntity<?> editar(@PathVariable(name = "uuid") UUID uuid, @RequestBody Cliente model) throws URISyntaxException {
+        model.setId(uuid);
         Cliente clienteSalvo = clienteService.editar(model);
         return ResponseEntity.created(new URI(String.format("%s/%s", httpServletRequest.getRequestURL(), clienteSalvo.getId()))).build();
     }
