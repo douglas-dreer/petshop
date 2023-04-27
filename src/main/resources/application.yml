@@ -1,0 +1,17 @@
+
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/petshop
+    username: postgres
+    password: Admin@123
+    driverClassName: org.postgresql.Driver
+server:
+  servlet:
+    context-path: /petshop/v1/api
+  port: '8080'
