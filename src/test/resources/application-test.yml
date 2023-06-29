@@ -1,0 +1,13 @@
+# Configurações do banco de dados de teste
+spring:
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/petshop_teste_integracao
+    username: postgres
+    password: Admin@123
+    driverClassName: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+
