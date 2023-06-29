@@ -6,6 +6,7 @@ import br.com.petshop.petshop.repository.ClienteRepository;
 import br.com.petshop.petshop.util.MapperUtil;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,11 +23,6 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public List<Cliente> listarPorNome(String nome) {
-        return MapperUtil.mapList(clienteRepository.findClienteEntitiesByNomeContainsIgnoreCase(nome), Cliente.class);
-    }
-
-    @Override
     public Cliente buscarPorId(UUID id) {
         return MapperUtil.convertTo(clienteRepository.findById(id).orElse(null), Cliente.class);
     }
@@ -34,6 +30,11 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public List<Cliente> buscarPorId(List<UUID> uuidList) {
         return MapperUtil.mapList(clienteRepository.findAllById(uuidList), Cliente.class);
+    }
+
+    @Override
+    public List<Cliente> listarPorStatus(boolean isAtivo) {
+        return MapperUtil.mapList(clienteRepository.findAllByIsAtivo(isAtivo), Cliente.class);
     }
 
     @Override
@@ -53,13 +54,14 @@ public class ClienteServiceImpl implements ClienteService {
     public Cliente editar(Cliente model) {
         Cliente clienteSalvo = this.buscarPorId(model.getId());
         if (clienteSalvo != null) {
-            model.setAtivo(clienteSalvo.isAtivo());
             model.setDataCriacao(clienteSalvo.getDataCriacao());
-            clienteSalvo = salvar(model);
+            model.setDataModificacao(LocalDateTime.now());
+            return salvar(model);
         }
 
-        return clienteSalvo;
+        return null;
     }
+
 
     @Override
     public Cliente excluir(UUID id) {
