@@ -17,27 +17,14 @@ public class ClienteEntity {
     @Column(nullable = false, insertable = false)
     private UUID id;
 
-    @Column(name = "nome", nullable = false)
-    private String nome;
-
-    @Column(name = "sobrenome", nullable = false)
-    private String sobreNome;
-
-    @Column(name = "apelido")
-    private String apelido;
-
-    @Column(name = "email", unique = true)
-    private String email;
-
     @Column(name = "data_criacao", nullable = false, updatable = false)
-    private LocalDateTime dataCriacao;
+    private LocalDateTime dataCriacao = LocalDateTime.now();
 
     @Column(name = "data_mofificacao")
     private LocalDateTime dataModificacao;
 
     @Column(name = "is_ativo", nullable = false)
     private boolean isAtivo = true;
-
 
     @PrePersist
     public void prePersist() {
@@ -49,5 +36,6 @@ public class ClienteEntity {
     public void postUpdate() {
         this.dataModificacao = LocalDateTime.now();
     }
+
 
 }

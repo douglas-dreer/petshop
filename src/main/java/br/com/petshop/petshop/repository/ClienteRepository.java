@@ -9,6 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<ClienteEntity, UUID> {
-
-    List<ClienteEntity> findClienteEntitiesByNomeContainsIgnoreCase(String nome);
+    List<ClienteEntity> findAllByIsAtivo(boolean isAtivo);
 }
